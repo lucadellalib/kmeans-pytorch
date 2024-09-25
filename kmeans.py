@@ -397,33 +397,6 @@ class KMeansMultiQuantizer(nn.Module):
             total_inertia += inertia
         return total_inertia / len(self.kmeanss)
 
-    @classmethod
-    def from_speechbrain(
-        cls,
-        encoder_name,
-        kmeans_dataset,
-        SSL_layers,
-        kmeans_repo_id="speechbrain/SSL_Quantization",
-        num_clusters=1000,
-        layers_num=None,
-        save_path=HUGGINGFACE_HUB_CACHE,
-        **kwargs,
-    ) -> "KMeansMultiQuantizer":
-        from codex.quantizers.speechbrain_ import SBKMeansQuantizer
-
-        kmeans = SBKMeansQuantizer(
-            encoder_name,
-            kmeans_dataset,
-            SSL_layers,
-            kmeans_repo_id,
-            num_clusters,
-            layers_num,
-            save_path,
-        )
-        kmeans = kmeans.torch(**kwargs)
-
-        return kmeans
-
 
 class KMeansResidualQuantizer(KMeansMultiQuantizer):
     """Residual K-means quantizer."""
